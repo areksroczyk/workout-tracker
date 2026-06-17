@@ -103,6 +103,8 @@ struct WorkoutHomeView: View {
     private func refreshData() async {
         try? await exerciseRepository?.fetchAndCacheExercises()
         try? await templateRepository?.fetchAndCacheTemplates()
+        let sessionRepo = SessionRepository(modelContext: modelContext)
+        try? await sessionRepo.fetchHistory()
     }
 
     private func checkForInProgressSession() {

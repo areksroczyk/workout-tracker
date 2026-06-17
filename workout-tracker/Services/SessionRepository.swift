@@ -50,46 +50,63 @@ final class SessionRepository {
     func fetchHistory() async throws {
         let dtos: [SessionListDTO] = try await apiClient.request(Endpoints.sessions())
 
-        // Fetch full detail for each session
+        var details: [SessionDTO] = []
         for listItem in dtos {
-            let descriptor = FetchDescriptor<SessionDraft>(predicate: #Predicate { $0.id == listItem.id })
-            let existing = try modelContext.fetch(descriptor)
+            let detail: SessionDTO = try await apiClient.request(Endpoints.session(id: listItem.id))
+            details.append(detail)
+        }
 
-            if existing.isEmpty {
-                let detail: SessionDTO = try await apiClient.request(Endpoints.session(id: listItem.id))
-                let draft = SessionDraft(
-                    id: detail.id,
-                    templateId: detail.templateId,
-                    startedAt: detail.startedAt,
-                    finishedAt: detail.finishedAt,
-                    notes: detail.notes,
-                    isSynced: true
-                )
-                modelContext.insert(draft)
+        // Replace synced history only after all server sessions are fetched successfully
+        let allLocal = try modelContext.fetch(FetchDescriptor<SessionDraft>())
+        for local in allLocal where local.finishedAt != nil && local.isSynced {
+            modelContext.delete(local)
+        }
 
-                for ex in detail.exercises {
-                    let exerciseDraft = SessionExerciseDraft(
-                        exerciseId: ex.exerciseId,
-                        orderIndex: ex.orderIndex
-                    )
-                    exerciseDraft.session = draft
-                    modelContext.insert(exerciseDraft)
-
-                    for s in ex.sets {
-                        let setDraft = SetDraft(
-                            setNumber: s.setNumber,
-                            weightKg: s.weightKg,
-                            reps: s.reps,
-                            completed: s.completed
-                        )
-                        setDraft.sessionExercise = exerciseDraft
-                        modelContext.insert(setDraft)
-                    }
-                }
-            }
+        for detail in details {
+            try insertSessionFromServer(detail)
         }
 
         try modelContext.save()
+    }
+
+    private func insertSessionFromServer(_ detail: SessionDTO) throws {
+        let sessionId = detail.id
+        let existingDescriptor = FetchDescriptor<SessionDraft>(
+            predicate: #Predicate { $0.id == sessionId }
+        )
+        if let existing = try modelContext.fetch(existingDescriptor).first {
+            modelContext.delete(existing)
+        }
+
+        let draft = SessionDraft(
+            id: detail.id,
+            templateId: detail.templateId,
+            startedAt: detail.startedAt,
+            finishedAt: detail.finishedAt,
+            notes: detail.notes,
+            isSynced: true
+        )
+        modelContext.insert(draft)
+
+        for ex in detail.exercises {
+            let exerciseDraft = SessionExerciseDraft(
+                exerciseId: ex.exerciseId,
+                orderIndex: ex.orderIndex
+            )
+            exerciseDraft.session = draft
+            modelContext.insert(exerciseDraft)
+
+            for s in ex.sets {
+                let setDraft = SetDraft(
+                    setNumber: s.setNumber,
+                    weightKg: s.weightKg,
+                    reps: s.reps,
+                    completed: s.completed
+                )
+                setDraft.sessionExercise = exerciseDraft
+                modelContext.insert(setDraft)
+            }
+        }
     }
 
     func getCachedHistory() throws -> [SessionDraft] {

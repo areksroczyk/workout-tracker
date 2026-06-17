@@ -10,7 +10,17 @@ final class APIClient {
     private init() {
         decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let string = try container.decode(String.self)
+            guard let date = DateFormatters.parseAPIDate(string) else {
+                throw DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Unrecognized date format: \(string)"
+                )
+            }
+            return date
+        }
 
         encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase

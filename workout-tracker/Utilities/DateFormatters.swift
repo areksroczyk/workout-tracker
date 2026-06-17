@@ -8,6 +8,36 @@ enum DateFormatters {
         return formatter
     }()
 
+    /// Parses API date strings, including timestamps without a timezone suffix.
+    static func parseAPIDate(_ string: String) -> Date? {
+        if let date = iso8601.date(from: string) {
+            return date
+        }
+
+        let fractionalWithoutTimezone = ISO8601DateFormatter()
+        fractionalWithoutTimezone.formatOptions = [.withFullDate, .withTime, .withFractionalSeconds]
+        fractionalWithoutTimezone.timeZone = TimeZone(secondsFromGMT: 0)
+        if let date = fractionalWithoutTimezone.date(from: string) {
+            return date
+        }
+
+        let posix = DateFormatter()
+        posix.locale = Locale(identifier: "en_US_POSIX")
+        posix.timeZone = TimeZone(secondsFromGMT: 0)
+        for format in [
+            "yyyy-MM-dd'T'HH:mm:ss.SSSSSS",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS",
+            "yyyy-MM-dd'T'HH:mm:ss",
+        ] {
+            posix.dateFormat = format
+            if let date = posix.date(from: string) {
+                return date
+            }
+        }
+
+        return nil
+    }
+
     /// Display date: "Jan 15, 2025"
     static let displayDate: DateFormatter = {
         let formatter = DateFormatter()
