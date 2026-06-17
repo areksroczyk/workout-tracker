@@ -79,7 +79,7 @@ Szczegółowy opis API i schemat bazy: [`PRD.md`](PRD.md)
 
 Dokumentacja interaktywna (Swagger): http://localhost:8000/docs
 
-![Swagger UI — dokumentacja API](docs/screenshots/11-swagger-docs.png)
+<img src="docs/screenshots/11-swagger-docs.png" alt="Swagger UI — dokumentacja API" width="700">
 
 ### 4.2 Baza danych (serwer)
 
@@ -123,61 +123,61 @@ Aplikacja posiada 4 zakładki: **Workout**, **History**, **Analytics** (placehol
 
 Ekran startowy z logowaniem przez Google.
 
-![Ekran logowania](docs/screenshots/01-login.png)
+<img src="docs/screenshots/01-login.png" alt="Ekran logowania" width="400">
 
 #### Ekran główny — szablony treningów
 
 Lista szablonów użytkownika i przycisk „New Workout”.
 
-![Ekran główny — Workout](docs/screenshots/02-workout-home.png)
+<img src="docs/screenshots/02-workout-home.png" alt="Ekran główny — Workout" width="400">
 
 #### Szczegóły szablonu
 
 Podgląd ćwiczeń w szablonie i przycisk „Start Workout”.
 
-![Szczegóły szablonu](docs/screenshots/03-template-detail.png)
+<img src="docs/screenshots/03-template-detail.png" alt="Szczegóły szablonu" width="400">
 
 #### Aktywna sesja treningowa
 
 Logowanie serii (kg, reps), timer, dodawanie ćwiczeń.
 
-![Aktywna sesja treningowa](docs/screenshots/04-active-session.png)
+<img src="docs/screenshots/04-active-session.png" alt="Aktywna sesja treningowa" width="400">
 
 #### Wybór ćwiczenia
 
 Wyszukiwarka i filtry kategorii (Push / Pull / Legs / Core / Cardio).
 
-![Wybór ćwiczenia](docs/screenshots/05-exercise-picker.png)
+<img src="docs/screenshots/05-exercise-picker.png" alt="Wybór ćwiczenia" width="400">
 
 #### Podsumowanie treningu
 
 Statystyki po zakończeniu sesji (czas, ćwiczenia, serie, objętość).
 
-![Podsumowanie treningu](docs/screenshots/06-session-summary.png)
+<img src="docs/screenshots/06-session-summary.png" alt="Podsumowanie treningu" width="400">
 
 #### Historia treningów
 
 Lista ukończonych sesji posortowana chronologicznie.
 
-![Historia treningów](docs/screenshots/07-history.png)
+<img src="docs/screenshots/07-history.png" alt="Historia treningów" width="400">
 
 #### Szczegóły sesji z historii
 
 Data, czas trwania, ćwiczenia z seriami i ciężarami.
 
-![Szczegóły sesji](docs/screenshots/08-session-detail.png)
+<img src="docs/screenshots/08-session-detail.png" alt="Szczegóły sesji" width="400">
 
 #### Analytics
 
 Podstawowe statystyki (liczba treningów, objętość, średni czas) oraz sekcja „coming soon”.
 
-![Zakładka Analytics](docs/screenshots/10-analytics.png)
+<img src="docs/screenshots/10-analytics.png" alt="Zakładka Analytics" width="400">
 
 #### Profil użytkownika
 
 Dane konta z Google i wylogowanie.
 
-![Profil użytkownika](docs/screenshots/09-profile.png)
+<img src="docs/screenshots/09-profile.png" alt="Profil użytkownika" width="400">
 
 ### 5.2 Lokalna baza danych (SwiftData)
 
