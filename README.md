@@ -2,7 +2,6 @@
 
 Projekt zaliczeniowy — aplikacja iOS + REST API + baza danych.
 
-**Repozytorium:** https://github.com/areksroczyk/workout-tracker  
 **Dokumentacja projektu:** [`DOKUMENTACJA.md`](DOKUMENTACJA.md)
 
 | Warstwa | Technologia |
