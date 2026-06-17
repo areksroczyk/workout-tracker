@@ -1,0 +1,52 @@
+# ===== iOS / Xcode =====
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xccheckout
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+build/
+Pods/
+*.xcconfig
+
+# ===== Python / Backend =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+.venv/
+env/
+.env
+*.egg-info/
+dist/
+.eggs/
+*.egg
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# ===== Secrets / credentials =====
+client_secret_*.json
+client_*.apps.googleusercontent.com.plist
+
+# ===== Local databases =====
+*.db
+
+# ===== General =====
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
